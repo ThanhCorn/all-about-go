@@ -110,8 +110,7 @@ func main() {
 	// List of backend servers to forward traffic to
 	servers := []Server{
 		newsimplesever("http://localhost:8081"), // Backend server 1
-		newsimplesever("http://localhost:8082"), // Backend server 2
-		newsimplesever("http://localhost:8083"), // Backend server 3
+		
 	}
 
 	lb := NewLoadBalancer("8080", servers) // Create a new load balancer listening on port 8080

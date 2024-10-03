@@ -3,8 +3,7 @@ This project is a basic implementation of a load balancer in Go using the Round 
 
 - `main.go`: The main entry point of the load balancer.
 - `api1.go`: Handles requests for API 1.
-- `api2.go`: Handles requests for API 2.
-- `api3.go`: Handles requests for API 3.
+
 
 ## Getting Started
 
@@ -16,7 +15,7 @@ This project is a basic implementation of a load balancer in Go using the Round 
 
 1. Clone the repository:
     ```sh
-    git clone <name of the repo>
+    git clone < link of the repo >
     cd Load_balancer
     ```
 
@@ -36,8 +35,7 @@ Run the load balancer:
 
 - `main.go`: Contains the main function and the load balancing logic.
 - `api1.go`: Defines the endpoints and handlers for API 1.
-- `api2.go`: Defines the endpoints and handlers for API 2.
-- `api3.go`: Defines the endpoints and handlers for API 3.
+
 
 ### Running the Project
 
@@ -53,14 +51,4 @@ To run all three APIs, execute the following commands in separate terminal windo
 
 ```sh
 go run api1.go
-go run api2.go
-go run api3.go
 ```
-
-### Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
-### License
-
-This project is licensed under the MIT License.
