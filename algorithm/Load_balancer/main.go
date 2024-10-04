@@ -8,6 +8,8 @@ import (
 	"os"
 	"sync"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Server interface defines methods for a load balancer to interact with backend servers
@@ -106,11 +108,35 @@ func handleErr(err error) {
 	}
 }
 
+type Movies struct {
+	Name       string `json:"name"`
+	Release    int    `json:"release"`
+	Collection string `json:"collection"`
+}
+
+// Hardcoded list of movies
+var movies = []Movies{
+	{Name: "Interstellar", Release: 2014, Collection: "1.23 Crores"},
+	{Name: "Shutter Island", Release: 2010, Collection: "186.4 Crores"},
+	{Name: "Tenet", Release: 2020, Collection: "20.4 Crores"},
+	{Name: "The Prestige", Release: 2006, Collection: "185 Millions"},
+	{Name: "Memento", Release: 2000, Collection: "9 Millions"},
+	{Name: "Dunkirk", Release: 2017, Collection: "530 Millions"},
+}
+
+// GetMovies serves the static movie data
+func GetMovies(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, movies)
+}
+
 func main() {
+	router := gin.Default()
+	router.GET("/", GetMovies)
+	router.Run("localhost:8081")
 	// List of backend servers to forward traffic to
 	servers := []Server{
 		newsimplesever("http://localhost:8081"), // Backend server 1
-		
+
 	}
 
 	lb := NewLoadBalancer("8080", servers) // Create a new load balancer listening on port 8080
@@ -120,9 +146,9 @@ func main() {
 		lb.serveProxy(rw, r) // Use the load balancer to serve the request
 	}
 
-	http.HandleFunc("/", handleRedirect)                        
-	fmt.Printf("Load Balancer running at http://localhost:%s\n", lb.port) 
-	err := http.ListenAndServe(":"+lb.port, nil)                           
+	http.HandleFunc("/", handleRedirect)
+	fmt.Printf("Load Balancer running at http://localhost:%s\n", lb.port)
+	err := http.ListenAndServe(":"+lb.port, nil)
 	if err != nil {
 		fmt.Println("Failed to start load balancer:", err)
 	}
